@@ -83,7 +83,18 @@ footer{background:#050507;color:#aaa;padding:35px 7vw;display:flex;justify-conte
 .pricing-disclaimer{font-size:11px;color:#8c8790;margin:18px 0 0}
 @media(max-width:1000px){.price-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.price-grid{grid-template-columns:1fr}.price-card.featured{transform:none}.sprint-callout{grid-template-columns:1fr;padding:24px}.sprint-price{text-align:left}}
-
+@media (max-width: 560px) {
+  nav > .cta {
+    font-size: 12px;
+    padding: 10px 13px;
+    width: auto;
+    max-width: 155px;
+    min-width: 0;
+    white-space: nowrap;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+}
 </style>
 </head>
 <body>
@@ -93,7 +104,7 @@ footer{background:#050507;color:#aaa;padding:35px 7vw;display:flex;justify-conte
   <div class="navlinks">
     <a href="#solucoes">Serviços e valores</a><a href="#processo">Como funciona</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
   </div>
-  <button class="cta" onclick="go('contato')">Vamos impulsionar →</button>
+  <button class="cta" onclick="go('contato')">Vamos impulsionar?</button>
 </nav>
 
 <main id="top">
