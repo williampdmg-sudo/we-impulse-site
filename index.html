@@ -180,7 +180,15 @@ footer{background:#050507;color:#aaa;padding:35px 7vw;display:flex;justify-conte
 <section id="contato" class="contact">
 <div class="container contact-grid">
   <div><div class="kicker" style="color:#ffcd32">VAMOS CONVERSAR?</div><h2>Tem um desafio?<br><span class="grad">Vamos transformar</span><br>em movimento.</h2><p class="copy" style="color:#aaa6b0">Conte o desafio da sua empresa. Vamos entender o cenário e indicar o próximo passo.</p></div>
-  <form class="form" action="https://formspree.io/f/xkjjlglp" method="POST"><input id="name" name="name" type="text" autocomplete="name" required placeholder="Seu nome"><input id="email" name="email" type="email" autocomplete="email" required placeholder="Seu e-mail"><input id="company" name="company" type="text" autocomplete="organization" required placeholder="Empresa"><textarea id="message" name="message" required placeholder="Conte brevemente seu desafio"></textarea><input type="hidden" name="_subject" value="Novo contato pelo site da IMPULSE"><button class="cta" type="submit">Enviar desafio →</button></form>
+  <form class="form" id="contactForm" action="https://formspree.io/f/xkjjlglp" method="POST">
+  <input id="name" name="name" type="text" autocomplete="name" required placeholder="Seu nome">
+  <input id="email" name="email" type="email" autocomplete="email" required placeholder="Seu e-mail">
+  <input id="company" name="company" type="text" autocomplete="organization" required placeholder="Empresa">
+  <textarea id="message" name="message" required placeholder="Conte brevemente seu desafio"></textarea>
+  <input type="hidden" name="_subject" value="Novo contato pelo site da IMPULSE">
+  <button class="cta" type="submit">Enviar desafio →</button>
+  <p id="formStatus" role="status" aria-live="polite"></p>
+</form>
 </div>
 </section>
 </main>
@@ -193,7 +201,38 @@ footer{background:#050507;color:#aaa;padding:35px 7vw;display:flex;justify-conte
 function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth"});}
 function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800);}
 
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
+    const form = this;
+    const status = document.getElementById("formStatus");
+    const button = form.querySelector("button[type='submit']");
+
+    button.disabled = true;
+    button.textContent = "Enviando...";
+
+    try {
+        const response = await fetch(form.action, {
+            method: "POST",
+            body: new FormData(form),
+            headers: {
+                "Accept": "application/json"
+            }
+        });
+
+        if (response.ok) {
+            status.textContent = "Mensagem enviada com sucesso! Em breve entraremos em contato.";
+            form.reset();
+        } else {
+            status.textContent = "Não foi possível enviar. Tente novamente.";
+        }
+    } catch (error) {
+        status.textContent = "Erro de conexão. Tente novamente.";
+    }
+
+    button.disabled = false;
+    button.textContent = "Enviar desafio →";
+});
 </script>
 </body>
 </html>
